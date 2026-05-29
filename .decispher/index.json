@@ -1,0 +1,96 @@
+{
+  "schema": "decispher-context-map/v1",
+  "generatedAt": "2026-05-29T21:55:54.963Z",
+  "project": {
+    "id": "09cdff3f-745b-4973-84a0-425249b09a00",
+    "name": "First Project"
+  },
+  "company": {
+    "id": "4762c733-c70b-4865-9b82-b98cc1e816fc"
+  },
+  "spine": [
+    {
+      "id": "8be35ac2-c9d5-4eac-bf77-56bca40e7261",
+      "title": "All money amounts stored as integer minor units (cents), never floats",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "b814b2e5-ed10-4381-a098-d82c2d94fc77",
+      "title": "Realtime socket must use a short-lived one-time ticket, not the session token in the URL",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "df0a62fd-88e3-49e6-b9f4-f776dda775de",
+      "title": "Strict Prohibition on Storing Raw Payment Card Numbers",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "a420df60-f374-44a9-9ed3-14c23054a5d6",
+      "title": "WebSocket auth via short-lived ticket, never the long-lived session JWT in the URL",
+      "severity": "CRITICAL"
+    }
+  ],
+  "topics": [
+    {
+      "id": "c/decispher-official-mpkarwbs/architecture",
+      "label": "phase-2 architecture",
+      "description": "architeture decided for phase 2 decispher",
+      "unitCount": 8,
+      "spineUnitCount": 0,
+      "expansionUnitCount": 8,
+      "tokensInStub": 0,
+      "stubPath": ".decispher/topics/c/decispher-official-mpkarwbs/architecture.md",
+      "mcpTool": "decispher.get_context_for_topic"
+    },
+    {
+      "id": "c/decispher-official-mpkarwbs/coding-convention",
+      "label": "Coding Convention",
+      "description": "Conventions we use in our coding style",
+      "unitCount": 6,
+      "spineUnitCount": 3,
+      "expansionUnitCount": 3,
+      "tokensInStub": 267,
+      "stubPath": ".decispher/topics/c/decispher-official-mpkarwbs/coding-convention.md",
+      "mcpTool": "decispher.get_context_for_topic"
+    },
+    {
+      "id": "c/decispher-official-mpkarwbs/docs-constraint",
+      "label": "docs-constraint",
+      "description": null,
+      "unitCount": 4,
+      "spineUnitCount": 0,
+      "expansionUnitCount": 4,
+      "tokensInStub": 0,
+      "stubPath": ".decispher/topics/c/decispher-official-mpkarwbs/docs-constraint.md",
+      "mcpTool": "decispher.get_context_for_topic"
+    },
+    {
+      "id": "mcp",
+      "label": "MCP (Model Context Protocol)",
+      "description": "Decispher's Live Context surface — tools agents call to fetch decisions, topics, intents, and constraints.",
+      "unitCount": 3,
+      "spineUnitCount": 1,
+      "expansionUnitCount": 2,
+      "tokensInStub": 58,
+      "stubPath": ".decispher/topics/mcp.md",
+      "mcpTool": "decispher.get_context_for_topic"
+    }
+  ],
+  "mcp": {
+    "endpoint": null,
+    "tools": [
+      "decispher.check_intent",
+      "decispher.get_constraints",
+      "decispher.check_conventions",
+      "decispher.get_context_for_file",
+      "decispher.get_context_for_topic",
+      "decispher.list_topics",
+      "decispher.search_decisions",
+      "decispher.get_decision",
+      "decispher.ask_knowledge_base",
+      "decispher.capture_decision",
+      "decispher.copy_chat",
+      "decispher.paste_chat"
+    ]
+  }
+}
