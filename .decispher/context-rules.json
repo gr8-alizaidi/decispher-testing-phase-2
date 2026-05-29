@@ -1,0 +1,582 @@
+{
+  "$schema": "https://decispher.com/schemas/context-rules/v1.json",
+  "specVersion": "2.0.0",
+  "generatedAt": "2026-05-29T21:55:54.963Z",
+  "companyId": "4762c733-c70b-4865-9b82-b98cc1e816fc",
+  "projectId": "09cdff3f-745b-4973-84a0-425249b09a00",
+  "meta": {
+    "totalRules": 22,
+    "rulesByType": {
+      "decision": 12,
+      "convention": 4,
+      "constraint": 5,
+      "rationale": 1,
+      "ownership": 0,
+      "history": 0,
+      "plan": 0
+    },
+    "rulesBySeverity": {
+      "CRITICAL": 4,
+      "HIGH": 8,
+      "MEDIUM": 9,
+      "LOW": 1
+    },
+    "generator": "decispher-context-map@1.0.0"
+  },
+  "mcp": {
+    "instruction": "Enforcement manifest only — rule titles, severities, and file patterns. It does NOT contain the rationale, alternatives, or full body of any rule, and it may be stale relative to the live knowledge base. Do NOT treat this file as sufficient context. Before writing or reviewing code that touches a listed file pattern, call the MCP tool named in that rule's `mcpFetch` field to load the authoritative, up-to-date context. MCP is the source of truth.",
+    "tools": {
+      "getDecision": "decispher.get_decision({ decisionId })",
+      "getContextForTopic": "decispher.get_context_for_topic({ topic })",
+      "listTopics": "decispher.list_topics()"
+    }
+  },
+  "rules": [
+    {
+      "id": "8be35ac2-c9d5-4eac-bf77-56bca40e7261",
+      "type": "constraint",
+      "title": "All money amounts stored as integer minor units (cents), never floats",
+      "severity": "CRITICAL",
+      "status": "active",
+      "affectedFiles": [
+        "src/db/schema/orders.ts",
+        "src/services/cart.ts",
+        "src/services/checkout.ts"
+      ],
+      "tags": [
+        "money",
+        "payments",
+        "orders",
+        "precision"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"8be35ac2-c9d5-4eac-bf77-56bca40e7261\" })"
+    },
+    {
+      "id": "b814b2e5-ed10-4381-a098-d82c2d94fc77",
+      "type": "constraint",
+      "title": "Realtime socket must use a short-lived one-time ticket, not the session token in the URL",
+      "severity": "CRITICAL",
+      "status": "active",
+      "affectedFiles": [],
+      "tags": [
+        "websocket",
+        "auth"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"b814b2e5-ed10-4381-a098-d82c2d94fc77\" })"
+    },
+    {
+      "id": "df0a62fd-88e3-49e6-b9f4-f776dda775de",
+      "type": "constraint",
+      "title": "Strict Prohibition on Storing Raw Payment Card Numbers",
+      "severity": "CRITICAL",
+      "status": "active",
+      "affectedFiles": [
+        "src/payment/processor.ts",
+        "db/schema/payments.sql"
+      ],
+      "tags": [
+        "security",
+        "compliance",
+        "pci-dss",
+        "payments",
+        "stripe"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "src/payment/processor.ts",
+          "db/schema/payments.sql"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"df0a62fd-88e3-49e6-b9f4-f776dda775de\" })"
+    },
+    {
+      "id": "a420df60-f374-44a9-9ed3-14c23054a5d6",
+      "type": "constraint",
+      "title": "WebSocket auth via short-lived ticket, never the long-lived session JWT in the URL",
+      "severity": "CRITICAL",
+      "status": "active",
+      "affectedFiles": [
+        "src/realtime/gateway.ts",
+        "src/realtime/ticket.ts",
+        "src/auth/session.ts"
+      ],
+      "tags": [
+        "realtime",
+        "websocket",
+        "auth",
+        "security"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"a420df60-f374-44a9-9ed3-14c23054a5d6\" })"
+    },
+    {
+      "id": "e4ae823c-0eb5-4a48-9cf7-3ef20559deb5",
+      "type": "decision",
+      "title": "Document edits use server-authoritative CRDT merge, not last-write-wins",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "src/realtime/crdt.ts",
+        "src/realtime/document-service.ts"
+      ],
+      "tags": [
+        "realtime",
+        "crdt",
+        "collaboration",
+        "concurrency"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"e4ae823c-0eb5-4a48-9cf7-3ef20559deb5\" })"
+    },
+    {
+      "id": "26c9c1c0-343b-4f5a-90e1-afe1a8971e43",
+      "type": "decision",
+      "title": "Establish naming convention for database columns and API JSON fields",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "services/orders-service/",
+        "db/schema",
+        "api/routes"
+      ],
+      "tags": [
+        "database",
+        "postgresql",
+        "orders-service",
+        "architecture",
+        "acid"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "services/orders-service/",
+          "db/schema",
+          "api/routes"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"26c9c1c0-343b-4f5a-90e1-afe1a8971e43\" })"
+    },
+    {
+      "id": "f90be491-0af7-4fea-9540-9f50d440579d",
+      "type": "convention",
+      "title": "Idempotency-Key required on all checkout/charge POST endpoints",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "src/routes/checkout.ts",
+        "src/routes/refunds.ts",
+        "src/middleware/idempotency.ts"
+      ],
+      "tags": [
+        "payments",
+        "idempotency",
+        "api",
+        "reliability"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"f90be491-0af7-4fea-9540-9f50d440579d\" })"
+    },
+    {
+      "id": "7fbfbfac-5fa2-449b-b8ce-fd4d62d240b9",
+      "type": "decision",
+      "title": "Inventory reservation uses SELECT ... FOR UPDATE, not optimistic retry",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "src/services/inventory.ts",
+        "src/services/checkout.ts"
+      ],
+      "tags": [
+        "inventory",
+        "concurrency",
+        "postgres",
+        "checkout"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"7fbfbfac-5fa2-449b-b8ce-fd4d62d240b9\" })"
+    },
+    {
+      "id": "2671835c-fbfe-4802-9b65-7c732066d082",
+      "type": "constraint",
+      "title": "Keep the Phase 1 / Phase 2 boundary: capture creates records, Guardian enforces",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved"
+      ],
+      "tags": [
+        "phase-2",
+        "constraint",
+        "separation-of-concerns",
+        "decision-guardian"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"2671835c-fbfe-4802-9b65-7c732066d082\" })"
+    },
+    {
+      "id": "dfae8267-c945-4f1b-bfe1-5321b12d8c87",
+      "type": "decision",
+      "title": "Migrate from Umbraco to Contentful for CMS functionality",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "infrastructure/cms",
+        "frontend/content-integration"
+      ],
+      "tags": [
+        "cms",
+        "headless",
+        "infrastructure",
+        "contentful",
+        "migration"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "infrastructure/cms",
+          "frontend/content-integration"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"dfae8267-c945-4f1b-bfe1-5321b12d8c87\" })"
+    },
+    {
+      "id": "4ddf24a6-8c7a-438e-abb6-dbaeeaef1e4e",
+      "type": "decision",
+      "title": "Phase 2 is the Decision Capture Engine (capture & intelligence layer)",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved",
+        "phase-2/ARCHITECTURE.md"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "capture-engine",
+        "overview"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"4ddf24a6-8c7a-438e-abb6-dbaeeaef1e4e\" })"
+    },
+    {
+      "id": "b0a3128b-6658-4409-80b4-a5b2e0703890",
+      "type": "decision",
+      "title": "Phase 2 pipeline: Sources → Recorders → Core Intelligence → Notifications → Dashboard",
+      "severity": "HIGH",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved",
+        "phase-2/ARCHITECTURE.md"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "pipeline",
+        "event-driven"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"b0a3128b-6658-4409-80b4-a5b2e0703890\" })"
+    },
+    {
+      "id": "c516730e-6c60-4ff2-a1f2-b92ae0f16bab",
+      "type": "decision",
+      "title": "An LLM-powered Analyzer Service turns raw activity into structured decisions",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "llm",
+        "analyzer"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/phase2_architecture_plan.md.resolved"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"c516730e-6c60-4ff2-a1f2-b92ae0f16bab\" })"
+    },
+    {
+      "id": "430932a3-f225-48ae-8791-b24632005528",
+      "type": "decision",
+      "title": "BullMQ on Redis is the message queue between recorders and the analyzer",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "bullmq",
+        "redis",
+        "queue"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/phase2_architecture_plan.md.resolved"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"430932a3-f225-48ae-8791-b24632005528\" })"
+    },
+    {
+      "id": "81e99341-c4d5-405e-bea4-a4873d20d406",
+      "type": "decision",
+      "title": "Decision Store is Postgres with embeddings",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "postgres",
+        "embeddings",
+        "decision-store"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/phase2_architecture_plan.md.resolved"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"81e99341-c4d5-405e-bea4-a4873d20d406\" })"
+    },
+    {
+      "id": "8f17e97d-1c8e-4b9e-98dd-35802d1200ad",
+      "type": "decision",
+      "title": "Increase MCP session inactivity window from 30 to 45 minutes",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "redis_ttl_config",
+        "mcp_logs_session_logic"
+      ],
+      "tags": [
+        "mcp",
+        "sessions",
+        "data-analysis",
+        "infrastructure"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "redis_ttl_config",
+          "mcp_logs_session_logic"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"8f17e97d-1c8e-4b9e-98dd-35802d1200ad\" })"
+    },
+    {
+      "id": "7e82c9e0-e875-4e42-82ee-b04ecd795fa2",
+      "type": "convention",
+      "title": "Notification Service uses the Strategy Pattern for pluggable channels",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved"
+      ],
+      "tags": [
+        "phase-2",
+        "convention",
+        "strategy-pattern",
+        "notifications"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/phase2_architecture_plan.md.resolved"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"7e82c9e0-e875-4e42-82ee-b04ecd795fa2\" })"
+    },
+    {
+      "id": "ea70b4e7-6a93-4895-ae01-7042d23b40a5",
+      "type": "rationale",
+      "title": "Phase 1 vs Phase 2 split: read-side enforcement vs write-side capture (both enforce)",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/CLAUDE.md",
+        "phase-2/ARCHITECTURE.md"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "decision-guardian",
+        "enforcement",
+        "correction"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/CLAUDE.md",
+          "phase-2/ARCHITECTURE.md"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"ea70b4e7-6a93-4895-ae01-7042d23b40a5\" })"
+    },
+    {
+      "id": "2bf01a8a-7da3-42f9-a974-d4cff711d32b",
+      "type": "convention",
+      "title": "Phase 2 is a pnpm + Turborepo monorepo",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/pnpm-workspace.yaml",
+        "phase-2/turbo.json",
+        "phase-2/tsconfig.base.json",
+        "phase-2/packages"
+      ],
+      "tags": [
+        "phase-2",
+        "convention",
+        "monorepo",
+        "pnpm",
+        "turborepo",
+        "tooling"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/pnpm-workspace.yaml",
+          "phase-2/turbo.json",
+          "phase-2/tsconfig.base.json",
+          "phase-2/packages"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"2bf01a8a-7da3-42f9-a974-d4cff711d32b\" })"
+    },
+    {
+      "id": "2215fc46-4754-420d-9c78-d8476116d5c2",
+      "type": "convention",
+      "title": "Realtime presence/typing events broadcast over Redis Pub/Sub, never stored in Postgres",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "src/realtime/presence.ts",
+        "src/realtime/pubsub.ts"
+      ],
+      "tags": [
+        "realtime",
+        "redis",
+        "presence",
+        "scaling"
+      ],
+      "supersededBy": null,
+      "enforcement": null,
+      "mcpFetch": "decispher.get_decision({ decisionId: \"2215fc46-4754-420d-9c78-d8476116d5c2\" })"
+    },
+    {
+      "id": "6e1cdf57-adc7-41fe-9a1b-02cdeeb2bd2d",
+      "type": "decision",
+      "title": "Two ingestion recorders: Slack Recorder Bot and Code Change Recorder",
+      "severity": "MEDIUM",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/phase2_architecture_plan.md.resolved"
+      ],
+      "tags": [
+        "phase-2",
+        "architecture",
+        "recorders",
+        "slack",
+        "code-changes"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/phase2_architecture_plan.md.resolved"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"6e1cdf57-adc7-41fe-9a1b-02cdeeb2bd2d\" })"
+    },
+    {
+      "id": "aca24657-80f9-4735-b67a-0b8faaa0b6d1",
+      "type": "decision",
+      "title": "Production deployment via Docker Compose; Paddle for billing",
+      "severity": "LOW",
+      "status": "active",
+      "affectedFiles": [
+        "phase-2/docker-compose.prod.yml",
+        "phase-2/infrastructure",
+        "phase-2/PADDLE_SETUP.md",
+        "phase-2/.env.paddle.example",
+        "phase-2/.github/workflows/eval-fusion.yml"
+      ],
+      "tags": [
+        "phase-2",
+        "deployment",
+        "docker",
+        "paddle",
+        "billing",
+        "infra"
+      ],
+      "supersededBy": null,
+      "enforcement": {
+        "blockOnViolation": false,
+        "requiresExplicitOverride": false,
+        "filePatterns": [
+          "phase-2/docker-compose.prod.yml",
+          "phase-2/infrastructure",
+          "phase-2/PADDLE_SETUP.md",
+          "phase-2/.env.paddle.example",
+          "phase-2/.github/workflows/eval-fusion.yml"
+        ],
+        "exemptPatterns": []
+      },
+      "mcpFetch": "decispher.get_decision({ decisionId: \"aca24657-80f9-4735-b67a-0b8faaa0b6d1\" })"
+    }
+  ]
+}
