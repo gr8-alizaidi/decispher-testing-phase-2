@@ -1,10 +1,12 @@
 import Fastify from 'fastify';
 import { checkoutRoutes } from './routes/checkout.js';
+import { expressCheckoutRoutes } from './routes/express-checkout.js';
 
 export function buildServer() {
   const app = Fastify({ logger: true });
   app.get('/health', async () => ({ status: 'ok' }));
   app.register(checkoutRoutes);
+  app.register(expressCheckoutRoutes);
   return app;
 }
 
